@@ -10,65 +10,93 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const teamList = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-confirmNewMember() {
-    inquirer
-      .prompt([
+//Ask user for manager info
+function askUserForManagerInfo() {
+
+    return inquirer.prompt([
         {
-          type: "confirm",
-          name: "new",
-          message: "Do you want to add a new team member?"
+
+            message: "name",
+            name: "",
+            type: "input"
+
         }
-      ])
-      .then(val => {
-        // If the user says yes to a new team member take in the team member information
-        if (val.new) {
-          this.getRole();
-        } else {
-          this.render();
+
+    ]).then (( managerData ) => {
+
+        // 
+        const newManager = new Manager( managerData.name, managerData.id, managerData.email, managerData.officenumber );
+        
+        teamList.push( newManager );
+
+        //Progresses the application to check for the user
+        askUserForEmployeeType();
+
+    });
+
+}
+
+// Ask user for employee type
+function askUserForEmployeeType() {
+    
+    return inquirer.prompt([
+        {
+
+            message: "name",
+            name: "",
+            type: "list"
+
         }
-      });
-  }
+
+    ]).then (( managerData ) => {
+
+        // if the engineer is selected
+        askUserForEngineerInfo();
+
+        // else if the user seleccted an intern
+        askUserForInternInfo();
+
+        //else
+        createHtmlFile();
+
+
+    });
+
+
+}
+
+//Ask user for engineer info
+function askUserForEngineerInfo() {
+
+
+
+}
+
+//Ask user for intern information
+function askUserForInternInfo() {
+
+
+
+}
+
+function createHtmlFile () {
+
+    const htmlContent = render( employeeList );
+
+    //Use fs module to render html file
+
+}
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-getRole() {
-
-    
-
-}
-
-memberBuild() {
-    return inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "choice",
-        message: "What is your member's role?",
-        // The users guess must be a number or letter         
-      }
-    ])
-    .then(val => {
-      // If the user's guess is in the current word, log that they chose correctly
-      const didGuessCorrectly = this.currentWord.guessLetter(val.choice);
-      if (didGuessCorrectly) {
-        console.log(chalk.green("\nCORRECT!!!\n"));
-
-        // Otherwise decrement `guessesLeft`, and let the user know how many guesses they have left
-      } else {
-        this.guessesLeft--;
-        console.log(chalk.red("\nINCORRECT!!!\n"));
-        console.log(this.guessesLeft + " guesses remaining!!!\n");
-      }
-    });
-}
-
-}
+askUserForManagerInfo();
 
 
 // After you have your html, you're now ready to create an HTML file using the HTML
@@ -76,8 +104,6 @@ memberBuild() {
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-
-
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on

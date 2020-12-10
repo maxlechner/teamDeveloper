@@ -21,18 +21,34 @@ function askUserForManagerInfo() {
     return inquirer.prompt([
         {
 
-            message: "name",
-            name: "",
+            message: "What is your manager's name?",
+            name: "name",
             type: "input"
-
+        },
+        {
+            message: "What is your manager's id?",
+            name: "id",
+            type: "input"
+        },
+        {
+            message: "What is your manager's email?",
+            name: "email",
+            type: "input"
+        },
+        {
+            message: "What is your manager's office number?",
+            name: "officeNumber",
+            type: "input"
+            
         }
 
     ]).then (( managerData ) => {
 
         // 
-        const newManager = new Manager( managerData.name, managerData.id, managerData.email, managerData.officenumber );
+        const newManager = new Manager( managerData.name, managerData.id, managerData.email, managerData.officeNumber );
         
         teamList.push( newManager );
+        console.log(teamList);
 
         //Progresses the application to check for the user
         askUserForEmployeeType();
@@ -47,31 +63,73 @@ function askUserForEmployeeType() {
     return inquirer.prompt([
         {
 
-            message: "name",
-            name: "",
-            type: "list"
+            message: "What type of employee would you like to add?",
+            name: "role",
+            type: "list",
+            choices: [ "Engineer", "Intern", "No more employees" ]
 
         }
 
-    ]).then (( managerData ) => {
+    ]).then (( roleType ) => {
 
         // if the engineer is selected
-        askUserForEngineerInfo();
+        if ( roleType.role === "Engineer" ) {
 
-        // else if the user seleccted an intern
-        askUserForInternInfo();
+            askUserForEngineerInfo();
 
-        //else
-        createHtmlFile();
+        } else if ( roleType.role === "Intern" ){
 
+            // else if the user seleccted an intern
+            askUserForInternInfo();
 
+        } else {
+
+            //else No more employees
+            createHtmlFile();
+
+        }
     });
-
-
 }
 
 //Ask user for engineer info
 function askUserForEngineerInfo() {
+    
+    return inquirer.prompt([
+        {
+
+            message: "What is the engineer's name?",
+            name: "name",
+            type: "input"
+        },
+        {
+            message: "What is your engineer's id?",
+            name: "id",
+            type: "input"
+        },
+        {
+            message: "What is your engineer's email?",
+            name: "email",
+            type: "input"
+        },
+        {
+            message: "What is your engineer's github?",
+            name: "github",
+            type: "input"
+            
+        }
+
+    ]).then (( engineerData ) => {
+
+        // 
+        const newEngineer = new Engineer( engineerData.name, engineerData.id, engineerData.email, engineerData.github );
+        
+        teamList.push( newEngineer );
+        console.log(teamList);
+
+        //Progresses the application to check for the user
+        askUserForEmployeeType();
+
+    });
 
 
 
@@ -80,6 +138,43 @@ function askUserForEngineerInfo() {
 //Ask user for intern information
 function askUserForInternInfo() {
 
+    return inquirer.prompt([
+        {
+
+            message: "What is the intern's name?",
+            name: "name",
+            type: "input"
+        },
+        {
+            message: "What is your intern's id?",
+            name: "id",
+            type: "input"
+        },
+        {
+            message: "What is your intern's email?",
+            name: "email",
+            type: "input"
+        },
+        {
+            message: "What is your intern's school?",
+            name: "school",
+            type: "input"
+            
+        }
+
+    ]).then (( internData ) => {
+
+        // 
+        const newIntern = new Intern( internData.name, internData.id, internData.email, internData.school );
+        
+        teamList.push( newIntern );
+
+        console.log(teamList);
+
+        //Progresses the application to check for the user
+        askUserForEmployeeType();
+
+    });
 
 
 }

@@ -181,9 +181,13 @@ function askUserForInternInfo() {
 
 function createHtmlFile () {
 
-    const htmlContent = render( employeeList );
+    const htmlContent = render( teamList );
 
     //Use fs module to render html file
+    fs.writeFile('index.html', htmlContent, (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
 
 }
 
@@ -191,6 +195,7 @@ function createHtmlFile () {
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
+// start app
 askUserForManagerInfo();
 
 

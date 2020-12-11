@@ -48,7 +48,7 @@ function askUserForManagerInfo() {
         const newManager = new Manager( managerData.name, managerData.id, managerData.email, managerData.officeNumber );
         
         teamList.push( newManager );
-        console.log(teamList);
+        console.log( teamList );
 
         //Progresses the application to check for the user
         askUserForEmployeeType();
@@ -130,10 +130,8 @@ function askUserForEngineerInfo() {
         askUserForEmployeeType();
 
     });
-
-
-
 }
+
 
 //Ask user for intern information
 function askUserForInternInfo() {
@@ -169,7 +167,7 @@ function askUserForInternInfo() {
         
         teamList.push( newIntern );
 
-        console.log(teamList);
+        console.log( teamList );
 
         //Progresses the application to check for the user
         askUserForEmployeeType();
@@ -184,20 +182,20 @@ function createHtmlFile () {
     const htmlContent = render( teamList );
 
     //Use fs module to render html file
-    fs.writeFile('index.html', htmlContent, (err) => {
+    fs.writeFile( outputPath, htmlContent, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
 
 }
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
 
 // start app
 askUserForManagerInfo();
 
+// After the user has input all employees desired, call the `render` function (required
+// above) and pass in an array containing all employee objects; the `render` function will
+// generate and return a block of HTML including templated divs for each employee!
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
